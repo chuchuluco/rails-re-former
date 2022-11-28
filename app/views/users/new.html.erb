@@ -1,4 +1,4 @@
-<h1>Create User</h1>
+<%# <h1>Create User</h1>
 <form accept-charset="UTF-8" action="/users" method="POST">
     <div class="field-username">
         <label for="username" class="formbuilder-text-label">Username</label>
@@ -15,4 +15,25 @@
     <div class="field-submit">
         <button type="submit" class="btn">Submit</button>
     </div>
-</form>
+</form> %>
+
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+    <ul>
+      <% @user.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with model: @user do |form| %>
+  <%= form.label "Username:" %>
+  <%= form.text_field :username, :value => "proto" %>
+  <%= form.label :email %>
+  <%= form.email_field :email, placeholder: "email@example.com" %>
+  <%= form.label :password %>
+  <%= form.password_field :password %>
+  <%= form.submit "Create" %>
+<% end %>
